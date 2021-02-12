@@ -1,0 +1,21 @@
+﻿@model Onion.Core.Domain.Dto.User.User
+
+<h2>Create User</h2>
+
+@using (Html.BeginForm("Create", "User"))
+{
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Username, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+
+}

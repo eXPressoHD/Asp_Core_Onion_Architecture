@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Onion.Application\Onion.Application.csproj" />
+    <ProjectReference Include="..\Onion.Core\Onion.Core.csproj" />
+    <ProjectReference Include="..\Onion.Infrastructure\Onion.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
