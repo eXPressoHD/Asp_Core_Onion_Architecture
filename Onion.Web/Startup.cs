@@ -10,6 +10,7 @@ using Onion.Core.Interfaces.Repository;
 using Onion.DependencyInjection;
 using Onion.Infrastructure.Data;
 using Onion.Infrastructure.Data.Implementations;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 
 namespace Onion.Web
 {
@@ -26,10 +27,7 @@ namespace Onion.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-
-
-
+            services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

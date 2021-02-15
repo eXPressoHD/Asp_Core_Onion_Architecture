@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Configuration;
 using Onion.Core.Data.Interfaces;
+using Onion.Core.Domain.Dto.Customer;
 using Onion.Core.Interfaces;
 using Onion.Core.Interfaces.Repository;
 using Onion.Infrastructure.Data;
@@ -25,6 +26,7 @@ namespace Onion.DependencyInjection
 
             //Repos
             builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
         }
     }
 }

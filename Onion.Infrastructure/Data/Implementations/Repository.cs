@@ -27,12 +27,12 @@ namespace Onion.Infrastructure.Data.Implementations
             return _context.Set<T>().ToList();
         }
 
-        public T GetById(Guid id)
+        public T GetById(int id)
         {
             return _context.Set<T>().Find(id);
         }
 
-        public void Remove(Guid id)
+        public void Remove(int id)
         {
             var type = _context.Set<T>().Find(id);
             _context.Remove(type);

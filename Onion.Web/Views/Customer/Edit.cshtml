@@ -1,0 +1,52 @@
+﻿@model Onion.Core.Domain.Dto.Customer.Customer
+
+<h2>Edit Customer</h2>
+
+@using (Html.BeginForm("Edit", "Customer"))
+{
+    <div class="row">
+        <div class="border container" style="padding:30px">
+            <div class="col-md-12">
+                <div class="form-group input-group">
+                    <div class="col-sm-3">
+                        <label class="control-label">First Name</label>
+                        <input asp-for="FirstName" class="form-control" value="@Model.FirstName"/>
+                    </div>
+                    <div class="col-sm-3">
+                        <label class="control-label">Last Name</label>
+                        <input asp-for="LastName" class="form-control"value="@Model.LastName" />
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Street" class="control-label"></label>
+                    <input asp-for="Street" class="form-control" value="@Model.Street" />
+                </div>
+                <div class="form-group input-group">
+                    <div class="col-sm-2">
+                        <label class="control-label">Postal Code</label>
+                        <input asp-for="PostalCode" class="form-control" value="@Model.PostalCode" />
+                    </div>
+                    <div class="col-sm-4">
+                        <label asp-for="City" class="control-label"></label>
+                        <input asp-for="City" class="form-control" value="@Model.City" />
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Phone" class="control-label"></label>
+                    <input asp-for="Phone" class="form-control" value="@Model.Phone" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" value="@Model.Email"/>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label">Additional Info</label>
+                    <textarea asp-for="AdditionalInfo" class="form-control">@Model.AdditionalInfo</textarea>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="submit" asp-controller="Customer" asp-action="UpdateCustomer" value="Update Customer" class="btn btn-primary form-group" />
+                </div>
+            </div>
+        </div>
+    </div>
+}

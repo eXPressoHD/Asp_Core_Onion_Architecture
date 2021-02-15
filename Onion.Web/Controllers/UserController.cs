@@ -19,7 +19,7 @@ namespace Onion.Web.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public IActionResult GetUser(Guid userId)
+        public IActionResult GetUser(int userId)
         {
             var user = _userRepository.GetById(userId);
 
@@ -29,7 +29,9 @@ namespace Onion.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            List<User> userList = _userRepository.Get().ToList();
+
+            return View(userList);
         }
 
         public ActionResult New()
@@ -47,7 +49,7 @@ namespace Onion.Web.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public IActionResult RemoveUser(Guid id)
+        public IActionResult RemoveUser(int id)
         {
             _userRepository.Remove(id);
             _userRepository.Save();
@@ -56,7 +58,7 @@ namespace Onion.Web.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        public IActionResult UpdateUser(Guid id)
+        public IActionResult UpdateUser(int id)
         {
             var user = _userRepository.GetById(id);
 

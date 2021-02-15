@@ -10,9 +10,9 @@ namespace Onion.Core.Data.Interfaces
     public interface IRepository<T> where T : class
     {
         void Add(T entity);
-        void Remove(Guid id);
+        void Remove(int id);
 
-        T GetById(Guid id);
+        T GetById(int id);
         IEnumerable<T> Get();
 
         void Save();
