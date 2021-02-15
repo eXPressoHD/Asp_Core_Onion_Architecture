@@ -1,5 +1,4 @@
 ﻿@model Onion.Core.Domain.Dto.Customer.Customer
-
 <h2>Edit Customer</h2>
 
 @using (Html.BeginForm("Edit", "Customer"))
@@ -41,7 +40,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label class="control-label">Additional Info</label>
-                    <textarea asp-for="AdditionalInfo" class="form-control">@Model.AdditionalInfo</textarea>
+                    <textarea maxlength="50" asp-for="AdditionalInfo" class="form-control">@Model.AdditionalInfo</textarea>
                 </div>
                 <div class="form-group col-md-6">
                     <input type="submit" asp-controller="Customer" asp-action="UpdateCustomer" value="Update Customer" class="btn btn-primary form-group" />

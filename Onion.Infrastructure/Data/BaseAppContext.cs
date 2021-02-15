@@ -42,6 +42,11 @@ namespace Onion.Infrastructure.Data
             this.Set<T>().Add(ent);
         }
 
+        public void Update<T>(T ent) where T : BaseDto
+        {
+            this.Set<T>().Update(ent);
+        }
+
         public void Delete<T>(T ent) where T : BaseDto
         {
             this.Set<T>().Remove(ent);

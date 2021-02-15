@@ -32,6 +32,11 @@ namespace Onion.Infrastructure.Data.Implementations
             return _context.Set<T>().Find(id);
         }
 
+        public void Update(T entity)
+        {           
+            _context.Set<T>().Update(entity);
+        }
+
         public void Remove(int id)
         {
             var type = _context.Set<T>().Find(id);
@@ -41,11 +46,6 @@ namespace Onion.Infrastructure.Data.Implementations
         public void Save()
         {
             _context.SaveChanges();
-        }
-
-        public void Update(T entity)
-        {
-            _context.Set<T>().Attach(entity);
-        }
+        }        
     }
 }

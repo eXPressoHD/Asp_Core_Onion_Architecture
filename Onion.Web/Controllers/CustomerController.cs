@@ -65,7 +65,8 @@ namespace Onion.Web.Controllers
 
         public IActionResult UpdateCustomer(Customer customer)
         {
-            _customerRepository.Update(customer);            
+            _customerRepository.Update(customer);
+            _customerRepository.Save();
 
             return RedirectToAction("Overview", "Customer");
         }
