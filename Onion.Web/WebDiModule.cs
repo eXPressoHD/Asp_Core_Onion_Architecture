@@ -26,7 +26,7 @@ namespace Onion.Web
             builder.Register(conf =>
             {
                 return new BaseAppContext(_config["ConnectionStrings:SqlLite"]);
-            }).As<IDbContext>().As<BaseAppContext>().SingleInstance();
+            }).As<IDbContext>().As<BaseAppContext>().InstancePerLifetimeScope();
 
             
         }

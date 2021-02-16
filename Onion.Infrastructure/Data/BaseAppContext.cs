@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Onion.Core.Domain.Dto;
 using Onion.Core.Interfaces;
+using Onion.Infrastructure.Data.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,22 +33,22 @@ namespace Onion.Infrastructure.Data
             optionsBuilder.UseSqlite(_connectionString);
         }
 
-        public IQueryable<T> GetAsQueryable<T>() where T : BaseDto
+        public IQueryable<T> GetAsNoTrackingQueryable<T>() where T : BaseEntity
         {
-            return this.Set<T>();
+            return this.Set<T>().AsNoTracking();
         }
 
-        public void Add<T>(T ent) where T : BaseDto
+        public void Add<T>(T ent) where T : BaseEntity
         {
             this.Set<T>().Add(ent);
         }
 
-        public void Update<T>(T ent) where T : BaseDto
+        public void Update<T>(T ent) where T : BaseEntity
         {
             this.Set<T>().Update(ent);
         }
 
-        public void Delete<T>(T ent) where T : BaseDto
+        public void Delete<T>(T ent) where T : BaseEntity
         {
             this.Set<T>().Remove(ent);
         }

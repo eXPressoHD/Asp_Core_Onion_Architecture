@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Onion.Infrastructure.Data.ViewModels;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Onion.Core.Domain.Dto.Customer
+namespace Onion.Web.Models
 {
-    public class Customer : BaseDto
+    public class CustomerViewModel : BaseEntity
     {
         public int CustomerId { get; set; }
         public string FirstName { get; set; }
@@ -17,10 +18,5 @@ namespace Onion.Core.Domain.Dto.Customer
         public string Email { get; set; }
         public string AdditionalInfo { get; set; }
         public string DateRegisteredTimestamp { get; set; }
-
-        public Customer() : base()
-        {
-        }
-
     }
 }
