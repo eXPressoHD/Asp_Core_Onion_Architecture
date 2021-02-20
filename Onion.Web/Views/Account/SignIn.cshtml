@@ -1,0 +1,30 @@
+﻿@model Onion.Infrastructure.Data.ViewModels.LoginViewModel
+
+@using (Html.BeginForm("SignInUser", "Account"))
+{
+    <main class="form-signin border-0">
+        <form>
+            <div asp-validation-summary="All">
+                    <h1 class="h3 mb-3 fw-normal text-center">Login</h1>
+                    <input type="email" asp-for="Email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <input type="password" asp-for="Password" id="inputPassword" class="form-control" placeholder="Password" required>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <h5 style="color:red">@TempData["ErrorMessage"]</h5>
+                    }
+                    <div class="checkbox mb-1">
+                        <label>
+                            <input type="checkbox" asp-for="RememberMe" value="remember-me"> Remember me
+                        </label>
+                    </div>
+                    <button formmethod="post" class="w-100 btn btn-lg btn-primary mb-3" type="submit">Sign in</button>
+                    <div class="loginSignUpSeperator">
+                        <span class="loginTextInSeperator"> or </span>
+                    </div>
+                    <a href="~/../Account/Register" class="w-100 btn btn-lg btn-primary">Create a new account</a>
+                </div>
+        </form>
+    </main>
+}

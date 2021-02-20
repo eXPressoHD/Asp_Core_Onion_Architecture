@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@inject Onion.Application.AuthenticationServices.Interfaces.IUserManager UserManager
+@using System.Security.Claims
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -29,6 +32,19 @@
                         </li>
                     </ul>
                 </div>
+
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <div class="form-inline">
+                        <a class="btn btn-danger my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-inline">
+                        <a class="btn btn-primary my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="SignIn">Sign In</a>
+                    </div>
+                }
             </div>
         </nav>
     </header>

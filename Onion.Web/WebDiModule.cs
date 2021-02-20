@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Onion.Core.Data.Interfaces;
 using Onion.Core.Interfaces;
@@ -27,8 +29,6 @@ namespace Onion.Web
             {
                 return new BaseAppContext(_config["ConnectionStrings:SqlLite"]);
             }).As<IDbContext>().As<BaseAppContext>().InstancePerLifetimeScope();
-
-            
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Onion.Core.Domain.Dto.Customer;
+using Onion.Core.Domain.Dto.User;
+using Onion.Infrastructure.Data.ViewModels;
 using Onion.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ namespace Onion.Web.Mapper
         public CustomerProfile()
         {
             CreateMap<Customer, CustomerViewModel>();
+            CreateMap<User, LoginViewModel>();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Onion.Core.Domain.Dto.Customer;
-using Onion.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

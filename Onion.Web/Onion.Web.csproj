@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Onion.DependencyInjection\Onion.DependencyInjection.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
 </Project>

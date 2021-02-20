@@ -62,7 +62,7 @@ namespace Onion.Web.Controllers
         {
             var user = _userRepository.GetById(id);
 
-            user.Username = "ChangedUserName";
+            user.Email = "ChangedUserName";
             user.Password = "34565";
 
             _userRepository.Update(user);

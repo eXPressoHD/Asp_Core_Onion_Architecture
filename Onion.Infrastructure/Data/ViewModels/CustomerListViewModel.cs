@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Onion.Web.Models
+namespace Onion.Infrastructure.Data.ViewModels
 {
     public class CustomerListViewModel : BaseEntity
     {

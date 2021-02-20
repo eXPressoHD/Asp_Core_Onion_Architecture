@@ -12,6 +12,12 @@ using Onion.DependencyInjection;
 using Onion.Infrastructure.Data;
 using Onion.Infrastructure.Data.Implementations;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System;
+using Onion.Application.AuthenticationServices.Interfaces;
+using Onion.Application.AuthenticationServices;
 
 namespace Onion.Web
 {
@@ -30,6 +36,14 @@ namespace Onion.Web
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromDays(7);
+            });
+
+            services.AddScoped<IUserManager, UserManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +63,7 @@ namespace Onion.Web
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
