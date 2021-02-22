@@ -1,32 +1,56 @@
 ﻿using AutoMapper;
-using Onion.Core.Data.Interfaces;
-using Onion.Core.Domain.Dto.User;
-using Onion.Infrastructure.Data;
-using Onion.Infrastructure.Data.ViewModels;
+using Onion.Application.EmailService.Interfaces;
+using Onion.Core.Domain.Dto;
+using Onion.Core.Domain.Dto.PasswortReset;
+using Onion.Infrastructure.Data.ViewModels.Authtentication.General;
 using Onion.Infrastructure.Data.ViewModels.Authtentication.UserRelated;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Onion.Application.EmailService
 {
-    public class PasswordResetService
+    public class PasswordResetService : IPasswordResetService
     {
-        private readonly IUserRepository _context;
+        private readonly IPasswordReset _context;
         private readonly IMapper _mapper;
 
-        public PasswordResetService(IUserRepository context, IMapper mapper)
+        public PasswordResetService(IPasswordReset context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public void SendPasswortRecoveryForUser(PasswordResetModel user)
-        {            
-            //UserViewModel userData = _mapper.Map<UserViewModel>(_context.GetById(user.UserId));
+        /// <summary>
+        /// Executed on "PasswordReset" Click by user xy...
+        /// </summary>
+        /// <param name="userVm">Userobject</param>
+        public void SendPasswortRecoveryForUser(UserViewModel userVm)
+        {
+            var pwrModel = new PasswordResetModel()
+            {
+                Email = userVm.Email,
+                TokenHash = GetNewHashToken(),
+                ExpirationDate = DateTime.Now.AddDays(1).ToString("yyyyMMddHHmmss"),
+                TokenUsed = 0
+            };
 
-            //_context.Update(userData);
+            _context.AddElement(_mapper.Map<PasswordReset>(pwrModel));
+            _context.Save();
 
+            //Finally 
+            SendMailWithResetLink(userVm.Email, pwrModel.TokenHash);
+        }        
+
+        private string GetNewHashToken()
+        {
+            return Guid.NewGuid().ToString().Substring(0,8);
+        }
+
+        /// <summary>
+        /// Send mail to user which holds link like -> www.example.com/passwordReset?username=Karan&token=ZB71yObR
+        /// </summary>
+        /// <param name="mailAddress"></param>
+        private void SendMailWithResetLink(string mailAddress, string token)
+        {
 
         }
     }

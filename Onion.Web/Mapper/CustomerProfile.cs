@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Onion.Core.Domain.Dto;
 using Onion.Core.Domain.Dto.Customer;
 using Onion.Core.Domain.Dto.User;
 using Onion.Infrastructure.Data.ViewModels;
 using Onion.Infrastructure.Data.ViewModels.Authtentication.General;
+using Onion.Infrastructure.Data.ViewModels.Authtentication.UserRelated;
 
 namespace Onion.Web.Mapper
 {
@@ -20,6 +22,9 @@ namespace Onion.Web.Mapper
             //User/ViewModel
             CreateMap<UserViewModel, User>();
             CreateMap<User, UserViewModel>();
+
+            //PasswordReset
+            CreateMap<PasswordReset, PasswordResetModel>();
         }
     }
 }

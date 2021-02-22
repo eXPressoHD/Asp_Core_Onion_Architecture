@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Onion.Core\Onion.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\ViewModels\PasswordReset\" />
+  </ItemGroup>
+
 </Project>

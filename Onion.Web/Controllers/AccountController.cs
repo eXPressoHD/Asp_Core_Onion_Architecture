@@ -31,6 +31,8 @@ namespace Onion.Web.Controllers
             _userManager = userManager;
         }
 
+        #region Views
+
         public IActionResult SignIn()
         {
             return View();
@@ -40,6 +42,13 @@ namespace Onion.Web.Controllers
         {
             return View();
         }
+
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        #endregion
 
         public async Task<IActionResult> SignInUser(LoginViewModel model)
         {
