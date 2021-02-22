@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Authentication;
 using Onion.Application.AuthenticationServices.Interfaces;
-using Onion.Core.Domain.Dto.User;
+using Onion.Infrastructure.Data.ViewModels.Authtentication.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace Onion.Application.AuthenticationServices
 {
     public class UserManager : IUserManager
     {
-        private IEnumerable<Claim> GenerateClaimsFromAppUser(User user)
+        private IEnumerable<Claim> GenerateClaimsFromAppUser(UserViewModel user)
         {
             List<Claim> claims = new List<Claim>();
 
@@ -25,13 +25,13 @@ namespace Onion.Application.AuthenticationServices
             return claims;
         }
 
-        public bool SignInSuccessfull(User user)
+        public bool SignInSuccessfull(UserViewModel user)
         {
             //db check
             throw new NotImplementedException();
         }
 
-        public async Task SignIn(HttpContext httpContext, User user, bool isPersistent = false)
+        public async Task SignIn(HttpContext httpContext, UserViewModel user, bool isPersistent = false)
         {
             ClaimsIdentity identity = new ClaimsIdentity(this.GenerateClaimsFromAppUser(user),
                 CookieAuthenticationDefaults.AuthenticationScheme);

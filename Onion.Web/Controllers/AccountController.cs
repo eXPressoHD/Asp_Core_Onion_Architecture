@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Onion.Application.AuthenticationServices;
 using Onion.Application.AuthenticationServices.Interfaces;
+using Onion.Application.EmailService;
 using Onion.Core.Data.Interfaces;
 using Onion.Core.Domain.Dto.User;
 using Onion.Infrastructure.Data.ViewModels;
 using Onion.Infrastructure.Data.ViewModels.Authtentication;
+using Onion.Infrastructure.Data.ViewModels.Authtentication.General;
+using Onion.Infrastructure.Data.ViewModels.Authtentication.UserRelated;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,9 +43,9 @@ namespace Onion.Web.Controllers
 
         public async Task<IActionResult> SignInUser(LoginViewModel model)
         {
-            var user = _userRepository.Get()
+            UserViewModel user = _mapper.Map<UserViewModel>(_userRepository.Get()
                 .Where(u => u.Email == model.Email && u.Password == model.Password)
-                .FirstOrDefault();
+                .FirstOrDefault());
 
             if(user != null)
             {
@@ -64,7 +67,7 @@ namespace Onion.Web.Controllers
                 return RedirectToAction("Register");
             }
 
-            var existingUser = _userRepository.Get().Where(u => u.Email == model.Email).FirstOrDefault();
+            UserViewModel existingUser = _mapper.Map<UserViewModel>(_userRepository.Get().Where(u => u.Email == model.Email).FirstOrDefault());
 
             if(existingUser != null)
             {
@@ -72,13 +75,13 @@ namespace Onion.Web.Controllers
                 return RedirectToAction("Register");
             }
 
-            var userEntity = new User()
+            var userEntity = new UserViewModel()
             {
                 Email = model.Email,
                 Password = model.Password
             };
 
-            _userRepository.Add(userEntity);
+            _userRepository.Add(_mapper.Map<User>(userEntity));
             _userRepository.Save();
 
             return RedirectToAction("Index", "Home");
@@ -89,6 +92,12 @@ namespace Onion.Web.Controllers
         {
             await _userManager.SignOut(this.HttpContext);
             return RedirectToAction("Index", "Home");
+        }
+
+        public void ResetPasswordForUser(PasswordResetModel model)
+        {
+            //PasswordResetService service = new PasswordResetService(_userRepository, _mapper);
+            //service.SendPasswortRecoveryForUser(model);
         }
     }
 }

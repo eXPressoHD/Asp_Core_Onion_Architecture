@@ -2,11 +2,7 @@
 using Onion.Core.Domain.Dto.Customer;
 using Onion.Core.Domain.Dto.User;
 using Onion.Infrastructure.Data.ViewModels;
-using Onion.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Onion.Infrastructure.Data.ViewModels.Authtentication.General;
 
 namespace Onion.Web.Mapper
 {
@@ -14,8 +10,16 @@ namespace Onion.Web.Mapper
     {
         public CustomerProfile()
         {
+            //Customers
             CreateMap<Customer, CustomerViewModel>();
+            CreateMap<CustomerViewModel, Customer>();
+
+            //Users/Login
             CreateMap<User, LoginViewModel>();
+
+            //User/ViewModel
+            CreateMap<UserViewModel, User>();
+            CreateMap<User, UserViewModel>();
         }
     }
 }

@@ -24,8 +24,7 @@ namespace Onion.Web.Controllers
         [HttpGet]
         public IActionResult Overview()
         {
-            List<Customer> userDtos = _customerRepository.Get().ToList(); //List DTOS
-            List<CustomerViewModel> customerListViewModel = _mapper.Map<List<CustomerViewModel>>(userDtos);
+            List<CustomerViewModel> customerListViewModel = _mapper.Map<List<CustomerViewModel>>(_customerRepository.Get().ToList()); //List DTOS
 
             CustomerListViewModel vm = new CustomerListViewModel()
             {
@@ -42,12 +41,11 @@ namespace Onion.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Customer customer)
+        public IActionResult Create(CustomerViewModel customer)
         {
             customer.DateRegisteredTimestamp = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-            CustomerViewModel customerView = _mapper.Map<CustomerViewModel>(customer);
 
-            _customerRepository.Add(customer);
+            _customerRepository.Add(_mapper.Map<Customer>(customer));
             _customerRepository.Save();
 
             return RedirectToAction("Overview", "Customer");
@@ -64,16 +62,14 @@ namespace Onion.Web.Controllers
                 return View();
             }
 
-            var customer = _customerRepository.GetById(id);
-            CustomerViewModel vm = _mapper.Map<CustomerViewModel>(customer);
+            var customerVm = _mapper.Map<CustomerViewModel>(_customerRepository.GetById(id));
 
-            return View(vm);
+            return View(customerVm);
         }
 
-        public IActionResult UpdateCustomer(Customer customer)
+        public IActionResult UpdateCustomer(CustomerViewModel customer)
         {
-            CustomerViewModel vm = _mapper.Map<CustomerViewModel>(customer);
-            _customerRepository.Update(customer);
+            _customerRepository.Update(_mapper.Map<Customer>(customer));
             _customerRepository.Save();
 
             return RedirectToAction("Overview", "Customer");
