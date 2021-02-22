@@ -43,6 +43,11 @@ namespace Onion.Infrastructure.Data
             this.Set<T>().Add(ent);
         }
 
+        //public void AddElements<T>(IEnumerable<T> elements) where T : BaseEntity
+        //{
+            
+        //}
+
         public void Update<T>(T ent) where T : BaseEntity
         {
             this.Set<T>().Update(ent);

@@ -7,7 +7,8 @@ namespace Onion.Core.Interfaces.Repository
 {
     public interface IAddElementRepository<T> where T : BaseDto
     {
-        void AddElement(T element);
+        void Add(T element);
+        //void AddElements(T element);
         void Save();
     }
 }

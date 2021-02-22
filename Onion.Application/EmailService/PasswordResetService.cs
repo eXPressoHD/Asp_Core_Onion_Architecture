@@ -33,7 +33,7 @@ namespace Onion.Application.EmailService
                 TokenUsed = 0
             };
 
-            _context.AddElement(_mapper.Map<PasswordReset>(pwrModel));
+            _context.Add(_mapper.Map<PasswordReset>(pwrModel));
             _context.Save();
 
             //Finally 
