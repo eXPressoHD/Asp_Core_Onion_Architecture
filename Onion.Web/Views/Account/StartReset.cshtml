@@ -1,0 +1,18 @@
+﻿
+
+@using (Html.BeginForm("StartPasswordReset", "Account"))
+{
+    <main class="form-signin col-md-4 text-center d-flex align-items-center justify-content-center">
+        <form>
+            <div asp-validation-summary="All">
+                <h1 class="h3 mb-3 fw-normal text-center">Having trouble signing in?</h1>
+                <label>
+                    <p>Enter your Email address to get started.</p>
+                </label>
+                <input type="email" id="inputEmail" class="form-control mb-3" placeholder="Email address" required autofocus>
+                <button formmethod="post" class="w-100 btn btn-lg btn-primary mb-3" type="submit">Continue</button>
+
+            </div>
+        </form>
+    </main>
+}

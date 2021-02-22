@@ -48,6 +48,11 @@ namespace Onion.Web.Controllers
             return View();
         }
 
+        public IActionResult StartReset()
+        {
+            return View();
+        }
+
         #endregion
 
         public async Task<IActionResult> SignInUser(LoginViewModel model)

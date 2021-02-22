@@ -5,7 +5,7 @@
     <main class="form-signin border-0">
         <form>
             <div asp-validation-summary="All">
-                    <h1 class="h3 mb-3 fw-normal text-center">Login</h1>
+                    <h1 class="h3 mb-3 fw-normal text-center">Sign in</h1>
                     <input type="email" asp-for="Email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                     <span asp-validation-for="Email" class="text-danger"></span>
                     <input type="password" asp-for="Password" id="inputPassword" class="form-control" placeholder="Password" required>
@@ -20,6 +20,11 @@
                         </label>
                     </div>
                     <button formmethod="post" class="w-100 btn btn-lg btn-primary mb-3" type="submit">Sign in</button>
+                <div class="mb-2">
+                    <label>
+                        <a href="~/../Account/StartReset">Forgot your password?</a>
+                    </label>
+                </div>
                     <div class="loginSignUpSeperator">
                         <span class="loginTextInSeperator"> or </span>
                     </div>
