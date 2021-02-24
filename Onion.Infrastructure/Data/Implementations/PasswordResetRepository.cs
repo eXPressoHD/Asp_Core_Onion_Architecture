@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Onion.Infrastructure.Data.Implementations
 {
-    public class PasswordResetRepository : Repository<PasswordReset>, IPasswordReset
+    public class PasswordResetRepository : Repository<PasswordReset>, IPasswordResetRepository
     {
         public PasswordResetRepository(BaseAppContext context)
             : base(context)

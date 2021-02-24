@@ -5,6 +5,8 @@ using Onion.Application.AuthenticationServices;
 using Onion.Application.AuthenticationServices.Interfaces;
 using Onion.Application.EmailService;
 using Onion.Core.Data.Interfaces;
+using Onion.Core.Domain.Dto;
+using Onion.Core.Domain.Dto.PasswortReset;
 using Onion.Core.Domain.Dto.User;
 using Onion.Infrastructure.Data.ViewModels;
 using Onion.Infrastructure.Data.ViewModels.Authtentication;
@@ -21,14 +23,19 @@ namespace Onion.Web.Controllers
     {
         private readonly IUserManager _userManager;
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;        
+        private readonly IMapper _mapper;
+        private readonly IMailService _mailService;
+        private readonly IPasswordResetRepository _passwordReset;
 
         public AccountController(IUserRepository userRepository,
-            IMapper mapper, IUserManager userManager)
+            IMapper mapper, IUserManager userManager, IMailService mailService,
+            IPasswordResetRepository passwordReset)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _userManager = userManager;
+            _mailService = mailService;
+            _passwordReset = passwordReset;
         }
 
         #region Views
@@ -61,7 +68,7 @@ namespace Onion.Web.Controllers
                 .Where(u => u.Email == model.Email && u.Password == model.Password)
                 .FirstOrDefault());
 
-            if(user != null)
+            if (user != null)
             {
                 await _userManager.SignIn(this.HttpContext, user, model.RememberMe);
                 return RedirectToAction("Index", "Home");
@@ -75,7 +82,7 @@ namespace Onion.Web.Controllers
         public IActionResult RegisterUser(RegisterViewModel model)
         {
             //ConfirmPWCheck
-            if(model.Password != model.ConfirmPassword)
+            if (model.Password != model.ConfirmPassword)
             {
                 TempData["ErrorMessage"] = "Passwords do not match";
                 return RedirectToAction("Register");
@@ -83,7 +90,7 @@ namespace Onion.Web.Controllers
 
             UserViewModel existingUser = _mapper.Map<UserViewModel>(_userRepository.Get().Where(u => u.Email == model.Email).FirstOrDefault());
 
-            if(existingUser != null)
+            if (existingUser != null)
             {
                 TempData["ErrorMessage"] = "An account with this email already exists";
                 return RedirectToAction("Register");
@@ -108,10 +115,73 @@ namespace Onion.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public void ResetPasswordForUser(PasswordResetModel model)
+        public IActionResult StartPasswordReset(PasswordResetModel inputModel)
         {
-            //PasswordResetService service = new PasswordResetService(_userRepository, _mapper);
-            //service.SendPasswortRecoveryForUser(model);
+            UserViewModel pwr = new UserViewModel()
+            {
+                Email = inputModel.Email
+            };
+
+            PasswordResetService service = new PasswordResetService(_passwordReset, _mapper, _mailService);
+            bool successfullySend = service.SendPasswortRecoveryForUser(pwr);
+
+            if (successfullySend)
+            {
+                TempData["SuccessMessage"] = "Resetlink send to email.";
+            }
+            else
+            {
+                TempData["EmailErrorMessage"] = "Resetlink could not be send to email.";
+            }
+
+            return RedirectToAction("StartReset");
+        }
+
+        public IActionResult ResetPasswordForUser(UserPasswordResetModel user)
+        {
+            if (user.Password != user.PasswordRepeat)
+            {
+                TempData["ErrorMessage"] = "Passwords do not match";
+                return RedirectToAction("ResetPasswordForUser");
+            }
+
+            if (!String.IsNullOrEmpty(user.TokenHash))
+            {
+                string dateTimeFormat = "yyyyMMddHHmmss";
+                DateTime currentDateTime = Convert.ToDateTime(DateTime.Now.ToString(dateTimeFormat));
+                var tokenInDbForUser = _mapper.Map<PasswordResetModel>(_passwordReset.Get().Where(r =>
+                                                                       r.Email == user.Email
+                                                                       && r.TokenHash == user.TokenHash
+                                                                       && DateTime.ParseExact(r.ExpirationDate, dateTimeFormat, null) >= currentDateTime
+                                                                       && r.TokenUsed == 0));
+
+                if (tokenInDbForUser == null)
+                {
+                    TempData["ErrorMessage"] = "Link for reset expired";
+                    return RedirectToAction("ResetPasswordForUser");
+                }
+
+                UserViewModel userVm = _mapper.Map<UserViewModel>(_userRepository.Get().Where(u => u.Email == user.Email));
+
+                if (userVm != null)
+                {
+                    userVm.Password = user.PasswordRepeat;
+
+                    _userRepository.Update(_mapper.Map<User>(userVm));
+                    _userRepository.Save();
+
+                    //Update Token tab
+                    tokenInDbForUser.TokenUsed = 1;
+
+                    _passwordReset.Update(_mapper.Map<PasswordReset>(tokenInDbForUser));
+                    _passwordReset.Save();
+
+                    TempData["SuccessMessage"] = "Password successfully changed.";
+                    return RedirectToAction("SignIn");
+                }
+            }
+
+            return RedirectToAction("ResetPassword");
         }
     }
 }

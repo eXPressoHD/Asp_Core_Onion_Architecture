@@ -25,6 +25,8 @@ namespace Onion.Web.Mapper
 
             //PasswordReset
             CreateMap<PasswordReset, PasswordResetModel>();
+            CreateMap<PasswordResetModel, PasswordReset>();
+
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@model Onion.Infrastructure.Data.ViewModels.Authtentication.UserRelated.PasswordResetModel
 
 @using (Html.BeginForm("StartPasswordReset", "Account"))
 {
@@ -9,9 +9,17 @@
                 <label>
                     <p>Enter your Email address to get started.</p>
                 </label>
-                <input type="email" id="inputEmail" class="form-control mb-3" placeholder="Email address" required autofocus>
+                <input type="email" asp-for="Email" id="inputEmail" class="form-control mb-3" placeholder="Email address" required autofocus>
                 <button formmethod="post" class="w-100 btn btn-lg btn-primary mb-3" type="submit">Continue</button>
 
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <h5 style="color:green">@TempData["SuccessMessage"]</h5>
+                }
+                else if (TempData["EmailErrorMessage"] != null)
+                {
+                    <h5 style="color:red">@TempData["EmailErrorMessage"]</h5>
+                }
             </div>
         </form>
     </main>

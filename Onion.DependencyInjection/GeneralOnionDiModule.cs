@@ -3,8 +3,12 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Onion.Application.AuthenticationServices;
 using Onion.Application.AuthenticationServices.Interfaces;
+using Onion.Application.EmailService;
+using Onion.Application.EmailService.Interfaces;
 using Onion.Core.Data.Interfaces;
+using Onion.Core.Domain.Dto;
 using Onion.Core.Domain.Dto.Customer;
+using Onion.Core.Domain.Dto.PasswortReset;
 using Onion.Core.Interfaces;
 using Onion.Core.Interfaces.Repository;
 using Onion.Infrastructure.Data;
@@ -31,6 +35,9 @@ namespace Onion.DependencyInjection
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
             builder.RegisterType<UserManager>().As<IUserManager>();
+            builder.RegisterType<MailService>().As<IMailService>();
+            builder.RegisterType<PasswordResetRepository>().As<IPasswordResetRepository>();
+            builder.RegisterType<PasswordResetService>().As<IPasswordResetService>();
         }
     }
 }
